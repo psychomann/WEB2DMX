@@ -1,4 +1,4 @@
-# JSON2DMX
+# ESP-HTML+JSON2DMX
 
 Envoyer une requête JSON par une page Web ou requête HTML à un serveur embarqué sur une carte ESP32 ou ESP8266 connecté en Wi-Fi pour envoyer des consignes DMX sur un connecteur XLR 3 broches.
  
