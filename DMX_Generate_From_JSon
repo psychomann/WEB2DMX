@@ -1,6 +1,3 @@
-Les raccourcis simplifient Mon Drive … 
-Au cours des prochaines semaines, les éléments situés dans plusieurs dossiers seront remplacés par des raccourcis. L'accès aux fichiers et aux dossiers ne changera pas.En savoir plus
-
 <!DOCTYPE html>
 <html lang="fr-FR">
 	<head>
@@ -16,68 +13,146 @@ Au cours des prochaines semaines, les éléments situés dans plusieurs dossiers
 		<script>
 			
 			// Structure JSon -1-
-			// UniDMX = {"Uni":[{"ID":1,"NbrApp":1,"App":{"AppID":1,"AppName":"Lyre PT LED RGBAU + DS","PosDMX":1,"CnxDMX":8,"Can":[50,0,0,0,0,127,0,30,45],"CanName":["Rouge","Vert","Blue","Ambre","U-V","Dim","Strobe","Pan","Tilt"]}}]};
+			// UniDMX = {"Uni":[{"ID":1,"App":[{"AppName":"Lyre PT LED RGBAU + DS","PosDMX":1,"CnxDMX":8,"Can":[50,0,0,0,0,127,0,30,45],"CanName":["Rouge","Vert","Bleu","Ambre","U-V","Dim","Strobe","Pan","Tilt"]},{"AppName":"Spot RGB LED 4 Canaux","PosDMX":12,"CnxDMX":4,"Can":[127,63,36,127],"CanName":["Rouge","Vert","Blue","Dim"]}]}]}
 			
-			// Structure JSon -2- --- Je n'arrive pas utiliser les tableaux T_T
-			// UniDMX = {"Uni":[{"ID":1,"NbrApp":1,"App":{"AppID":1,"AppName":"Lyre PT LED RGBAU + DS","PosDMX":1,"CnxDMX":8,"Can":[50,0,0,0,0,127,0,30,45],"CanName":["Rouge","Vert","Blue","Ambre","U-V","Dim","Strobe","Pan","Tilt"]}}]};
 			
-			// Structure JSon -3-
-			// /*
-            
-				UniDMX = new Object();
-                UniDMX.Uni = new Array();
-                UniDMX.Uni[0] = new Object();
+			// Structure JSon -Old-
+			/*
+				
+				UniDMX = new Object(); // Classe Invers DMX
+                UniDMX.Uni = new Array(); // La table globale des Univers
+                UniDMX.Uni[0] = new Object(); // Un univers constitué d'un ID et d'appareils
                 UniDMX.Uni[0].ID = 1;
-				UniDMX.Uni[0].NbrApp = 1;
-				UniDMX.Uni[0].App = new Object();
-				UniDMX.Uni[0].App.AppID = 1;
-				UniDMX.Uni[0].App.AppName = "Lyre PT LED RGBAU + DS";
-				UniDMX.Uni[0].App.PosDMX = 1;
-				UniDMX.Uni[0].App.CnxDMX = 8;
-				UniDMX.Uni[0].App.Can = new Array();
-                UniDMX.Uni[0].App.CanName = new Array();
-                UniDMX.Uni[0].App.Can[0] = 50;
-                UniDMX.Uni[0].App.Can[1] = 0;
-				UniDMX.Uni[0].App.Can[2] = 0;
-				UniDMX.Uni[0].App.Can[3] = 0;
-				UniDMX.Uni[0].App.Can[4] = 0;
-				UniDMX.Uni[0].App.Can[5] = 127;
-				UniDMX.Uni[0].App.Can[6] = 0;
-				UniDMX.Uni[0].App.Can[7] = 30;
-				UniDMX.Uni[0].App.Can[8] = 45;
-                UniDMX.Uni[0].App.CanName[0] = "Rouge";
-                UniDMX.Uni[0].App.CanName[1] = "Vert";
-				UniDMX.Uni[0].App.CanName[2] = "Blue";
-				UniDMX.Uni[0].App.CanName[3] = "Ambre";
-				UniDMX.Uni[0].App.CanName[4] = "U-V";
-				UniDMX.Uni[0].App.CanName[5] = "Dim";
-				UniDMX.Uni[0].App.CanName[6] = "Strobe";
-				UniDMX.Uni[0].App.CanName[7] = "Pan";
-				UniDMX.Uni[0].App.CanName[8] = "Tilt";
+				UniDMX.Uni[0].App = new Array();
+				UniDMX.Uni[0].App[0] = new Object();
+				UniDMX.Uni[0].App[0].AppName = "Lyre PT LED RGBAU + DS";
+				UniDMX.Uni[0].App[0].PosDMX = 1;
+				UniDMX.Uni[0].App[0].CnxDMX = 8;
+				
+                UniDMX.Uni[0].App[0].CanName = new Array();
+				UniDMX.Uni[0].App[0].CanName[0] = "Rouge";
+                UniDMX.Uni[0].App[0].CanName[1] = "Vert";
+				UniDMX.Uni[0].App[0].CanName[2] = "Bleu";
+				UniDMX.Uni[0].App[0].CanName[3] = "Ambre";
+				UniDMX.Uni[0].App[0].CanName[4] = "U-V";
+				UniDMX.Uni[0].App[0].CanName[5] = "Dim";
+				UniDMX.Uni[0].App[0].CanName[6] = "Strobe";
+				UniDMX.Uni[0].App[0].CanName[7] = "Pan";
+				UniDMX.Uni[0].App[0].CanName[8] = "Tilt";
+				
+				UniDMX.Uni[0].App[0].Can = new Array();
+                UniDMX.Uni[0].App[0].Can[0] = 50;
+                UniDMX.Uni[0].App[0].Can[1] = 0;
+				UniDMX.Uni[0].App[0].Can[2] = 0;
+				UniDMX.Uni[0].App[0].Can[3] = 0;
+				UniDMX.Uni[0].App[0].Can[4] = 0;
+				UniDMX.Uni[0].App[0].Can[5] = 127;
+				UniDMX.Uni[0].App[0].Can[6] = 0;
+				UniDMX.Uni[0].App[0].Can[7] = 30;
+				UniDMX.Uni[0].App[0].Can[8] = 45;
+				
+				UniDMX.Uni[0].App[1] = new Object();
+				UniDMX.Uni[0].App[1].AppName = "Spot RGB LED 4 Canaux";
+				UniDMX.Uni[0].App[1].PosDMX = 12;
+				UniDMX.Uni[0].App[1].CnxDMX = 4;
+				
+                UniDMX.Uni[0].App[1].CanName = new Array();
+				UniDMX.Uni[0].App[1].CanName[0] = "Rouge";
+                UniDMX.Uni[0].App[1].CanName[1] = "Vert";
+				UniDMX.Uni[0].App[1].CanName[2] = "Blue";
+				UniDMX.Uni[0].App[1].CanName[3] = "Dim";
+				
+				UniDMX.Uni[0].App[1].Can = new Array();
+                UniDMX.Uni[0].App[1].Can[0] = 127;
+                UniDMX.Uni[0].App[1].Can[1] = 63;
+				UniDMX.Uni[0].App[1].Can[2] = 36;
+				UniDMX.Uni[0].App[1].Can[3] = 127;
+				
+			*/
+			// /*
+			// Structure JSon -Courante-
+			
+			UniDMX = new Object(); // Classe Invers DMX
+			UniDMX.Uni = new Array(); // La table globale des Univers
+			UniDMX.Uni[0] = new Object(); // Un univers constitué d'un ID et d'appareils
+			UniDMX.Uni[0].ID = 1;
+			UniDMX.Uni[0].App = new Array();
+			
+			
+			UniDMX.Uni[0].App[0] = new Object();
+			UniDMX.Uni[0].App[0].AppName = "Lyre PT LED RGBAU + DS";
+			UniDMX.Uni[0].App[0].PosDMX = 1;
+			
+			UniDMX.Uni[0].App[0].CanName = new Array();
+			UniDMX.Uni[0].App[0].CanName[0] = "Rouge";
+			UniDMX.Uni[0].App[0].CanName[1] = "Vert";
+			UniDMX.Uni[0].App[0].CanName[2] = "Bleu";
+			
+			UniDMX.Uni[0].App[0].Can = new Array();
+			UniDMX.Uni[0].App[0].Can[0] = 50;
+			UniDMX.Uni[0].App[0].Can[1] = 0;
+			UniDMX.Uni[0].App[0].Can[2] = 0;
+			
+			
+			/*
+				
+				UniDMX.Uni[0].App[0].CanName[3] = "Ambre";
+				UniDMX.Uni[0].App[0].CanName[4] = "U-V";
+				UniDMX.Uni[0].App[0].CanName[5] = "Dim";
+				UniDMX.Uni[0].App[0].CanName[6] = "Strobe";
+				UniDMX.Uni[0].App[0].CanName[7] = "Pan";
+				UniDMX.Uni[0].App[0].CanName[8] = "Tilt";
+				
+				UniDMX.Uni[0].App[0].Can[3] = 0;
+				UniDMX.Uni[0].App[0].Can[4] = 0;
+				UniDMX.Uni[0].App[0].Can[5] = 127;
+				UniDMX.Uni[0].App[0].Can[6] = 0;
+				UniDMX.Uni[0].App[0].Can[7] = 30;
+				UniDMX.Uni[0].App[0].Can[8] = 45;
+				
+				
+				
+				
+				UniDMX.Uni[0].App[1] = new Object();
+				UniDMX.Uni[0].App[1].AppName = "Spot RGB LED 4 Canaux";
+				UniDMX.Uni[0].App[1].PosDMX = 12;
                 
-            // */
-            
+				UniDMX.Uni[0].App[1].CanName = new Array();
+				UniDMX.Uni[0].App[1].CanName[0] = "Rouge";
+                UniDMX.Uni[0].App[1].CanName[1] = "Vert";
+				UniDMX.Uni[0].App[1].CanName[2] = "Blue";
+				UniDMX.Uni[0].App[1].CanName[3] = "Dim";
+				
+				UniDMX.Uni[0].App[1].Can = new Array();
+                UniDMX.Uni[0].App[1].Can[0] = 127;
+                UniDMX.Uni[0].App[1].Can[1] = 63;
+				UniDMX.Uni[0].App[1].Can[2] = 36;
+				UniDMX.Uni[0].App[1].Can[3] = 127;
+				
+				
+			*/
+			
 		</script>
 		
 		<script>
-        
+			
 			function myOnLoad()
 			{
 				// console.log("Page chargée");
-				//console.log("Lancement de DMX_HTML_Render");
+				// console.log("Lancement de DMX_HTML_Render");
 				DMX_HTML_Render();
-                
 				// console.log("Lancement de DMX_JSon_Render");
 				DMX_JSon_Render();
-                
 			}
 			
 		</script>
         
+		<!-- fonction de génération de la page -->
+		
 		<script>
 			function DMX_HTML_Render()
 			{
-				console.log("Execution de DMX_HTML_Render");
+				// console.log("Execution de DMX_HTML_Render");
                 let HTML_Render = HTML_Convert(UniDMX); 
 				document.getElementById("DMX_HTML_Render").innerHTML = HTML_Render;
 			}
@@ -85,241 +160,495 @@ Au cours des prochaines semaines, les éléments situés dans plusieurs dossiers
 			function DMX_JSon_Render()
 			{
 				// console.log("Execution de DMX_JSon_Render");
-				let JSon_Render = JSON.stringify(UniDMX);                
-				document.getElementById("DMX_JSon_Render").innerHTML = JSon_Render;
+				
+				//console.log(document.getElementById("JSonMode").checked);
+				if (document.getElementById("JSonMode").checked)
+				{
+					let JSon_Render = JSON.stringify(UniDMX);
+					JSon_Render += "<hr>";
+					document.getElementById("DMX_JSon_Render").innerHTML = JSon_Render;
+				}
+				else
+				{
+					document.getElementById("DMX_JSon_Render").innerHTML = "";
+				}
 			}
-
+			
             function HTML_Convert(UniDMX)
             {
             	let HTML_Dump = "";
                 
+				// Géneration des univers DMX
                 for (let i=0; i < UniDMX.Uni.length ; i++) {
-                HTML_Dump += "<h2>Univers : " + UniDMX.Uni[i].ID + "</h2>";  
-                HTML_Dump += "<p>Nombre appareils " + UniDMX.Uni[i].NbrApp + "</p>";
-                HTML_Dump += "<h3>Appareil " + UniDMX.Uni[i].App.AppID + " - " + UniDMX.Uni[i].App.AppName + "</h3>";
-                HTML_Dump += "<ul>";
-				HTML_Dump += "<li>Canal DMX : " + UniDMX.Uni[i].App.PosDMX + "</li>";
-                HTML_Dump += "<li>Canaux DMX : " + UniDMX.Uni[i].App.CnxDMX + "</li>";
-                HTML_Dump += "</ul>";
-                HTML_Dump += "<ol>";
-                for (let j=0; j < UniDMX.Uni[i].App.Can.length ; j++) {
-               	HTML_Dump += "<li>" + UniDMX.Uni[i].App.CanName[j] + " : " + UniDMX.Uni[i].App.Can[j] + "</li>";
-                HTML_Dump += "<div class=\"slidecontainer\"><input type=\"range\" min=\"0\" max=\"127\" value=\"" + UniDMX.Uni[i].App.Can[j] + "\" class=\"slider\" id=\"U" + i + 1 + "_App" + UniDMX.Uni[i].App.AppID + "_DMX" + j + 1 + "\"></div>";
-                }
-             	HTML_Dump += "</ol><br>";
-                HTML_Dump += "<hr>";
-                }
+					// Géneration d'un univers DMX
+					HTML_Dump += "<div class=\"Uni_DMX\">";
+					
+					if (document.getElementById("ConfigMode").checked)
+					{
+						HTML_Dump += "<b><u>Univers : " + (UniDMX.Uni[i].ID);
+						HTML_Dump += "</u></b> (App : " + UniDMX.Uni[i].App.length + ") <br> <br>";
+					}
+					else
+					{
+						HTML_Dump += "<h2>Univers : " + (UniDMX.Uni[i].ID);
+						HTML_Dump += " (Nombre appareils " + UniDMX.Uni[i].App.length + ")";
+						HTML_Dump +=  "</h2>";
+					}
+					
+					
+					// Géneration des appareils
+					for (let k=0; k < UniDMX.Uni[i].App.length ; k++) {
+						// Géneration d'un appareil
+						
+						// Information de l'appareil
+						HTML_Dump += "<div class=\"App_DMX\">";
+						
+						if (document.getElementById("ConfigMode").checked)
+						{
+							
+							HTML_Dump += "<b>" + (k + 1) + " - " + UniDMX.Uni[i].App[k].AppName;
+							HTML_Dump += " <input id=\"";
+							HTML_Dump += "InputRen_U" + (i + 1) + "_App" + (k + 1);
+							HTML_Dump += "\" type=\"text\" placeholder=\"Renommer\">";
+							HTML_Dump += "<button id=\"";
+							HTML_Dump += "SendInputRen_U" + (i + 1) + "_App" + (k + 1);
+							HTML_Dump += "\" onclick=\"RenApp(this)\">Modifier</button>";
+							HTML_Dump += "</b> / Cnx : " + UniDMX.Uni[i].App[k].PosDMX;
+							HTML_Dump += " (+" + UniDMX.Uni[i].App[k].Can.length + ")";
+							
+							HTML_Dump += " <input id=\"";
+							HTML_Dump += "InputPosDMX_U" + (i + 1) + "_App" + (k + 1);
+							HTML_Dump += "\" type=\"text\"  min=\"0\" max=\"2048\" placeholder=\"0~512\">";
+							HTML_Dump += "<button id=\"";
+							HTML_Dump += "SendInputPosDMX_U" + (i + 1) + "_App" + (k + 1); 
+							HTML_Dump += "\" onclick=\"ModPosDMX(this)\">Modifier</button>";				
+							
+							HTML_Dump += "<ol>";
+							
+							for (let j=0; j < UniDMX.Uni[i].App[k].Can.length ; j++) {				
+								HTML_Dump += "<li>";
+								HTML_Dump += "<input  onchange=\"majvaleurslider(this)\" type=\"range\" min=\"0\" max=\"127\" class=\"slider\"";
+								HTML_Dump += "id=\"";
+								HTML_Dump += "S_U" + (i + 1) + "_App" + (k + 1) + "_DMX" + (j + 1);
+								HTML_Dump += "\"";
+								HTML_Dump += " value=\"";
+								HTML_Dump += UniDMX.Uni[i].App[k].Can[j];
+								HTML_Dump += "\">";
+								HTML_Dump += UniDMX.Uni[i].App[k].CanName[j];
+								HTML_Dump += " : ";
+								HTML_Dump += "<span id=\"";
+								HTML_Dump += "U" + (i + 1) + "_App" + (k + 1) + "_DMX" + (j + 1);
+								HTML_Dump += "\">";
+								HTML_Dump +=  UniDMX.Uni[i].App[k].Can[j];
+								HTML_Dump += "</span>";
+								HTML_Dump += "</li>";
+							}
+							
+							HTML_Dump += "</ol>";
+							
+						}
+						else
+						{
+							
+							HTML_Dump += "<h3>Appareil " + (k + 1) + " - " + UniDMX.Uni[i].App[k].AppName + "</h3>";
+							HTML_Dump += "<ul>";
+							HTML_Dump += "<li>Canal DMX : " + UniDMX.Uni[i].App[k].PosDMX + "</li>";
+							HTML_Dump += "<li>Canaux DMX : " + UniDMX.Uni[i].App[k].Can.length + "</li>";
+							HTML_Dump += "</ul>";
+							
+							
+							// Géneration des canaux
+							HTML_Dump += "<div class=\"Canaux_DMX\">";
+							HTML_Dump += "<ol>";
+							
+							for (let j=0; j < UniDMX.Uni[i].App[k].Can.length ; j++) {				
+								// Géneration d'un canal
+								HTML_Dump += "<div class=\"Canal_DMX\">";
+								HTML_Dump += "<li>";
+								HTML_Dump += UniDMX.Uni[i].App[k].CanName[j];
+								HTML_Dump += " : ";
+								// Géneration de l'ID Valeur
+								HTML_Dump += "<span id=\"";
+								HTML_Dump += "U" + (i + 1) + "_App" + (k + 1) + "_DMX" + (j + 1);
+								HTML_Dump += "\">";
+								HTML_Dump +=  UniDMX.Uni[i].App[k].Can[j];
+								HTML_Dump += "</span>";
+								
+								// Géneration du slider
+								HTML_Dump += "</li>";
+								HTML_Dump += "<div class=\"slidercontainer\">" ;
+								HTML_Dump += "<input  onchange=\"majvaleurslider(this)\" type=\"range\" min=\"0\" max=\"127\" class=\"slider\"";
+								// Géneration de l'ID du  du canal
+								HTML_Dump += "id=\"";
+								HTML_Dump += "S_U" + (i + 1) + "_App" + (k + 1) + "_DMX" + (j + 1);
+								HTML_Dump += "\"";
+								// Value par défault
+								HTML_Dump += " value=\"";
+								HTML_Dump += UniDMX.Uni[i].App[k].Can[j];
+								HTML_Dump += "\">";
+								// Géneration du slider terminé
+								HTML_Dump += "</div>";
+								
+								// Géneration d'un canal terminé
+								HTML_Dump += "</div>";
+								
+							}
+							
+							//  Géneration des canaux Terminé
+							HTML_Dump += "</ol>";
+							HTML_Dump += "</div>";	
+							
+							//  Géneration de l'appareil Terminé
+							
+						}
+						
+						HTML_Dump += "</div>";
+						
+						if (document.getElementById("ConfigMode").checked)
+						{
+							
+							
+							HTML_Dump += "Paramètre : <input id=\"";
+							HTML_Dump += "NameForNewCan_U" + (i + 1) + "_App" + (k + 1);
+							HTML_Dump += "\" type=\"text\" placeholder=\"Fonction\">";
+							HTML_Dump += "<input id=\"";
+							HTML_Dump += "ValForNewCan_U" + (i + 1) + "_App" + (k + 1);
+							HTML_Dump += "\" type=\"text\" min=\"0\" max=\"127\" placeholder=\"0~127\">";
+							HTML_Dump += "<button id=\"";
+							HTML_Dump += "SendNewCan_U" + (i + 1) + "_App" + (k + 1);
+							HTML_Dump += "\" onclick=\"AddCan(this)\">+</button>";
+							HTML_Dump += "<button id=\"";
+							HTML_Dump += "DelLastCan_U" + (i + 1) + "_App" + (k + 1);
+							HTML_Dump += "\" onclick=\"DelCan(this)\">-</button>";
+							HTML_Dump += "<br>"
+							
+							
+						}
+					}
+					
+					//  Géneration de l'univers terminé
+					HTML_Dump += "</div>";
+					HTML_Dump += "<hr>";
+					
+				}
+				
                 return HTML_Dump;
-            }
+			}
             
 		</script>
-    </head>
+		
+		<!-- fonction d'interaction des s -->
+		<script> 
+			
+			
+			function AddCan(element)
+			{
+				/*
+				var ircn = document.getElementById("InputRegCanNom").value;
+				var irv = document.getElementById("InputRegVal").value;
+				UniDMX.Uni[Ui].App[Appk].CanName.push(ircn);
+				// Ajouter des test pour les valeur absurdes hors 0-127
+				if (if (0 <= NewPosDMX && NewPosDMX < 128))
+				UniDMX.Uni[Ui].App[Appk].Can.push(irv);
+				myOnLoad();
+				*/
+			}
+			
+			
+			function DelCan(element)
+			{
+				
+				/*
+				UniDMX.Uni[Ui].App[Appk].CanName.pop();
+				UniDMX.Uni[Ui].App[Appk].Can.pop();
+				myOnLoad();
+				*/
+			}
+			
+			function RenApp(element) {
+				
+				var RenID = element.id;
+				var RenIDsplit = RenID.split("_");
+				
+				var RenIDUniver = RenIDsplit[1];
+				var RenIDApp = RenIDsplit[2];
+				
+				var ValUniver = RenIDUniver.slice(1); // On vire "U"de l'ID
+				var ValApp = RenIDApp.slice(3); // On vire "App"de l'ID
+				
+				var IDNewName = RenID.slice(4); // On vire "Send"de l'ID
+				var NewName = document.getElementById(IDNewName).value
+				
+				
+				console.log("UniDMX.Uni[U].App[A].AppName : " + UniDMX.Uni[(ValUniver - 1)].App[ValApp - 1].AppName);
+				console.log("ValUniver : " + ValUniver);
+				console.log("ValApp : " + ValApp);
+				console.log("ValApp : " + IDNewName);
+				console.log("NewName : " + NewName);
+				
+				
+				if (NewName)
+				{
+					UniDMX.Uni[(ValUniver - 1)].App[ValApp - 1].AppName = NewName;
+				}
+				
+				myOnLoad();
+			}
+			
+			function ModPosDMX(element) {
+				
+				var PosDMXID = element.id;
+				var PosDMXIDsplit = PosDMXID.split("_");
+				
+				var PosDMXIDUniver = PosDMXIDsplit[1];
+				var PosDMXIDApp = PosDMXIDsplit[2];
+				
+				var ValUniver = PosDMXIDUniver.slice(1); // On vire "U"de l'ID
+				var ValApp = PosDMXIDApp.slice(3); // On vire "App"de l'ID
+				
+				var IDNewPosDMX = PosDMXID.slice(4); // On vire "Send"de l'ID
+				var NewPosDMX = document.getElementById(IDNewPosDMX).value
+				
+					console.log("ValUniver : " + ValUniver);
+					console.log("ValApp : " + ValApp);
+					console.log("NewPosDMX : " + NewPosDMX);	
+				
+				if (0 < NewPosDMX && NewPosDMX < 2048)
+				{
+					UniDMX.Uni[(ValUniver - 1)].App[ValApp - 1].PosDMX = NewPosDMX;
+				}
+				myOnLoad();
+			}
+			
+			function majvaleurslider(element) {
+				
+				
+				console.log("majvaleurslider");
+				
+				var sliderID = element.id;
+				var sliderValue = document.getElementById(element.id).value;
+				var sliderDump = sliderID.slice(2);
+				
+				// Mise à jour du texte du Slider
+				
+				document.getElementById(sliderDump).innerHTML = sliderValue;
+				
+				sliderID = element.id;
+				var sliceIDsplit = sliderID.split("_");
+				
+				var sliceUniver = sliceIDsplit[1]; // La partie Univers
+				var sliceApp = sliceIDsplit[2]; // La partie App
+				var sliceDMX = sliceIDsplit[3]; // La partie DMX
+				
+				var ValUniver = sliceUniver.slice(1);  // On vire "U" de l'ID
+				var ValApp = sliceApp.slice(3); // On vire "App"de l'ID
+				var ValDMX = sliceDMX.slice(3); // On vire "DMX"de l'ID
+				
+				
+				console.log("ValUniver : " + ValUniver);
+				console.log("ValApp : " + ValApp);
+				console.log("ValDMX : " + ValDMX);
+				console.log("sliderValue : " + sliderValue);
+				
+				
+				UniDMX.Uni[(ValUniver - 1)].App[ValApp - 1].Can[ValDMX - 1] = sliderValue;
+				DMX_JSon_Render();
+				
+				// websocket.send(Number + "s" + Value.toString());
+				
+			}
+			
+			
+			function parseelementID(elementID, info)
+			{
+				
+				var sliceIDsplit = elementID.split("_");
+				
+				var sliceUniver = sliceIDsplit[1]; // La partie Univers
+				var sliceApp = sliceIDsplit[2]; // La partie App
+				var sliceDMX = sliceIDsplit[3]; // La partie DMX
+				
+				var ValUniver = sliceUniver.slice(1);  // On vire "U"de l'ID
+				var ValApp = sliceApp.slice(3); // On vire "App"de l'ID
+				var ValDMX = sliceDMX.slice(3); // On vire "DMX"de l'ID
+				
+				if (mode == "U")
+				{
+					return (ValUniver - 1);
+				}
+				if (mode == "App")
+				{
+					return (ValApp - 1);
+				}
+				if (mode == "DMX")
+				{
+					return (ValDMX - 1);
+				}
+				return (4096);
+				
+				
+			}
+			
+		</script>
+		
+	</head>
 	
 	<body onload="myOnLoad()">
 		
 		<div class="render">
-			<h1>Page de génération de DMX_Appareils.json</h1><hr>
-			<script>
-				// console.log("Passage dans le rendu automatisé");
-			</script>
-			<h2><b><u>Rendus générés : </u></b></h2><hr>
-			<p id=DMX_JSon_Render> Espace de rendu généré en JavaScript de l'objet JSon</p>
-			
-			<hr>
-			<p id=DMX_HTML_Render> Espace de rendu généré en HTML avec du JavaScript</p>
-			<hr>
-		</div>
+			<h1>Page de génération de DMX_Appareils.json</h1>
+			<input type="checkbox" id="ConfigMode"  name="ConfigMode" onclick="myOnLoad()" checked> Config Debug
+		<input type="checkbox" id="ConfigMode_Can"  name="ConfigMode_Can" onclick="myOnLoad()" > Config Canaux
+		<input type="checkbox" id="ConfigMode_App"  name="ConfigMode_App" onclick="myOnLoad()" > Config Appareils
+		<input type="checkbox" id="ConfigMode_Uni"  name="ConfigMode_Uni" onclick="myOnLoad()" > Config Univers
+		<input type="checkbox" id="JSonMode"  name="JsonMode" onclick="myOnLoad()" checked> Mode Json
+		<button>Charger</button>
+		<button>Sauvegarder</button>
 		
-		<div class="process">
-			<h2><b><u>Zone de test : </u></b></h2><hr>
-			<script>
-				// console.log("Passage dans la zone de test");
-			</script>
-			<!-- JS (Pour gerer la structures des objets) -->
+		<hr>			
+		
+		<div id=DMX_JSon_Render> Espace de rendu généré en JavaScript de l'objet JSon</div>
+		<div id=DMX_HTML_Render> Espace de rendu généré en HTML avec du JavaScript</div>
+		
+		
+		<script>
+			var Ui = 0;
+			var Appk = 0;
+			
+			function ModCan()
+			{
+				var irc = document.getElementById("InputRegCanal").value;
+				UniDMX.Uni[Ui].App[Appk].PosDMX = irc;
+				myOnLoad();
+			}
+			
 			
 
-			
-			<div class="RéglagesDMX">
-				<h3>Canaux</h3>
-				<form>
-					Fonction : <input type="text" value="Utilité">
-					Valeur : <input type="text" value="0~127">
-					Canal : <input type="text" value="0~127">
-				</form> 
-				
-				<script>
-					function AddCan(CanNom, Valeur)
-					{
-						;
-					}
-					
-					function ModCan(CanNbr)
-					{
-						;
-					}
-					
-					function ValCan(CanNbr, valeur)
-					{
-						;
-					}
-					
-					function DelCan(CanNbr)
-					{
-						;
-					} 
-				</script>
-				
-				<button onclick="">Ajouter un canal</button>
-				<button onclick="">Modifier le canal</button>
-				<button onclick="">Changer la valeur du canal</button>
-				<button onclick="">Supprimer le canal</button>
-			</div>
-			<div class="Appareil">		
-				<h3>Appareils</h3>
-				<form>
-					ID de l'appareil : <input type="text" value="ID de l'appareil">
-					Nom de l'appareil : <input type="text" value="Nom de l'appareil">
-					Canal DMX : <input type="text" value="0~512">
-					Canaux DMX : <input type="text" value="0~512">
-				</form>
-				<script>
-					
-					function RenApp(AppID, AppNom)
-					{
-						;
-					}
-					
-					function DelApp(AppID, AppNom)
-					{
-						;
-					}
-					
-					function ModCan(AppNom, AppPosDMX, AppCnxDMX)
-					{
-						;
-					}
-					
-					
-					function ModCnx(AppNom, AppPosDMX, AppCnxDMX)
-					{
-						;
-					}
-					
-					
-					function AddApp(AppNom, AppPosDMX, AppCnxDMX)
-					{
-						;
-					}
-					
-				</script>
-				
-				<button onclick="">Renommer l'appareil</button>
-				<button onclick="">Supprimer l'appareil</button>
-				<button onclick="">Modifier le Canal</button>
-				<button onclick="">Modifier les Canaux</button>
-				<button onclick="">Ajouter un appareil</button>
-			</div>
-			<div class="Univers">			
-				<h3>Univers</h3>
-				<form>
-					Univers ID : <input type="text" value="Univers ID">
-				</form>
-				<script>
-					
-					function AddUni(UniID)
-					{
-						// UniID est un nombre inexistant alors ajouté directement ou incrément des univers disponibles
-						;
-					}
-					
-					function DelUni(UniID)
-					{
-						// UniID est un nombre inexistant alors suppression du dernier univers disponible
-						;
-					}
-					
-				</script>
-				<button onclick="">Ajouter un univers</button>
-				<button onclick="">Supprimer l'univers</button>
-			</div>
+		</script>
 		</div>
-        
-        
-        
+		
+		<hr>
+	</div>
+	
+	<div class="process">
+		<h2><b><u>Zone à intégrer</u></b></h2><hr>
+		<script>
+			// console.log("Passage dans la zone de test");
+		</script>
+		<!-- JS (Pour gerer la structures des objets) -->
+		
+		
+		<div class="Appareil">		
+			<h3>Appareils</h3>
+			<form>
+				ID de l'appareil : <input type="text" value="ID de l'appareil">
+				Nom de l'appareil : <input type="text" value="Nom de l'appareil">
+				Canal DMX : <input type="text" value="0~512">
+				Canaux DMX : <input type="text" value="0~512">
+			</form>
+			
+			<button onclick="">Renommer l'appareil</button>
+			<button onclick="">Supprimer l'appareil</button>
+			<button onclick="">Modifier le Canal</button>
+			<button onclick="">Modifier les Canaux</button>
+			<button onclick="">Ajouter un appareil</button>
+		</div>
+		<div class="Univers">			
+			<h3>Univers</h3>
+			<form>
+				Univers ID : <input type="text" value="Univers ID">
+			</form>
+			<script>
+				
+				function AddUni(UniID)
+				{
+					// UniID est un nombre inexistant alors ajouté directement ou incrément des univers disponibles
+					;
+				}
+				
+				function DelUni(UniID)
+				{
+					// UniID est un nombre inexistant alors suppression du dernier univers disponible
+					;
+				}
+				
+			</script>
+			<button onclick="">Ajouter un univers</button>
+			<button onclick="">Supprimer l'univers</button>
+		</div>
+	</div>
+	
+	
+	<!--
+		
 		<div class="rendu">	
-			<br><br><hr><h2><b><u>Rendu Attendu : </u></b></h2><hr>
-			<div class="Univers">
-				<h2>Univers 1</h2>
-				<div class="Appareil">
-					<h3>Appareil 1 - Lyre PT LED RGBAU + DS</h3>
-					<div class="RéglagesDMX">
-						<ul>
-							<li>Canal DMX : 1</li>
-							<li>Canaux DMX : 9</li>
-						</ul>
-						<div class="RéglagesCanauxDMX">
-							<ol>
-								<li>Rouge : 50</li>
-								<div class="slidecontainer"><input type="range" min="0" max="127" value="50" class="slider" id="U_App_DMX"></div>
-								<li>Vert : 0</li>
-								<div class="slidecontainer"><input type="range" min="0" max="127" value="0" class="slider" id="U_App_DMX"></div>
-								<li>Bleu : 0</li>
-								<div class="slidecontainer"><input type="range" min="0" max="127" value="0" class="slider" id="U_App_DMX"></div>
-								<li>Ambre : 0</li>
-								<div class="slidecontainer"><input type="range" min="0" max="127" value="0" class="slider" id="U_App_DMX"></div>
-								<li>Ultra-Violet : 0</li>
-								<div class="slidecontainer"><input type="range" min="0" max="127" value="0" class="slider" id="U_App_DMX"></div>
-								<li>Dim : 127</li>
-								<div class="slidecontainer"><input type="range" min="0" max="127" value="127" class="slider" id="U_App_DMX"></div>
-								<li>Strobe : 0</li>
-								<div class="slidecontainer"><input type="range" min="0" max="127" value="0" class="slider" id="U_App_DMX"></div>
-								<li>Pan : 30</li>
-								<div class="slidecontainer"><input type="range" min="0" max="127" value="30" class="slider" id="U_App_DMX"></div>
-								<li>Tilt : 45</li>
-								<div class="slidecontainer"><input type="range" min="0" max="127" value="45" class="slider" id="U_App_DMX"></div>
-							</ol>
-						</div>
-						<form>
-							Fonction : <input type="text" value="Utilité">
-							Valeur : <input type="text" value="0~127">
-							Canal : <input type="text" value="0~127">
-						</form> 
-						<button>Ajouter un canal</button>
-						<button>Modifier le canal</button>
-						<button>Changer la valeur du canal </button>
-						<button>Supprimer le canal</button>
-					</div>
-				</div>
-				<br>
-				<form>
-					ID de l'appareil : <input type="text" value="ID de l'appareil">
-					Nom de l'appareil : <input type="text" value="Nom de l'appareil">
-					<br>
-					<button>Renommer l'appareil</button>
-					<button>Supprimer l'appareil</button>
-					<br>
-					Canal DMX : <input type="text" value="0~512">
-					<button>Modifier le Canal</button><br>
-					Canaux DMX : <input type="text" value="0~512">
-					<button>Modifier les Canaux</button><br>
-					<button>Ajouter un appareil</button>
-				</form> 
-				<br><br>
-				<form>
-					Univers ID : <input type="text" value="Univers ID">
-				</form> 
-				<button>Ajouter un univers</button>
-				<button>Supprimer l'univers</button>
-			</div>
+		<br><br><hr><h2><b><u>Rendu Attendu : </u></b></h2><hr>
+		<div class="Univers">
+		<h2>Univers 1</h2>
+		<div class="Appareil">
+		<h3>Appareil 1 - Lyre PT LED RGBAU + DS</h3>
+		<div class="RéglagesDMX">
+		<ul>
+		<li>Canal DMX : 1</li>
+		<li>Canaux DMX : 9</li>
+		</ul>
+		<div class="RéglagesCanauxDMX">
+		<ol>
+		<li>Rouge : <span id="U_App_DMX_R">50</span></li>
+		<div class="slidercontainer"><input onchange="majvaleurslider(this)" type="range" min="0" max="127" value="50" class="slider" id="S_U_App_DMX_R"></div>
+		<li>Vert : <span id="U_App_DMX_V">0</span></li>
+		<div class="slidercontainer"><input onchange="majvaleurslider(this)"  type="range" min="0" max="127" value="0" class="slider" id="S_U_App_DMX_V"></div>
+		<li>Bleu : <span id="U_App_DMX_B">0</span></li>
+		<div class="slidercontainer"><input onchange="majvaleurslider(this)"  type="range" min="0" max="127" value="0" class="slider" id="S_U_App_DMX_B"></div>
+		<li>Ambre : <span id="U_App_DMX_A">0</span></li>
+		<div class="slidercontainer"><input onchange="majvaleurslider(this)"  type="range" min="0" max="127" value="0" class="slider" id="S_U_App_DMX_A"></div>
+		<li>Ultra-Violet : <span id="U_App_DMX_U">0</span></li>
+		<div class="slidercontainer"><input onchange="majvaleurslider(this)"  type="range" min="0" max="127" value="0" class="slider" id="S_U_App_DMX_U"></div>
+		<li>Dim : <span id="U_App_DMX_D">127</span></li>
+		<div class="slidercontainer"><input onchange="majvaleurslider(this)"  type="range" min="0" max="127" value="127" class="slider" id="S_U_App_DMX_D"></div>
+		<li>Strobe : <span id="U_App_DMX_S">0</span></li>
+		<div class="slidercontainer"><input onchange="majvaleurslider(this)"  type="range" min="0" max="127" value="0" class="slider" id="S_U_App_DMX_S"></div>
+		<li>Pan : <span id="U_App_DMX_P">30</span></li>
+		<div class="slidercontainer"><input onchange="majvaleurslider(this)"  type="range" min="0" max="127" value="30" class="slider" id="S_U_App_DMX_P"></div>
+		<li>Tilt : <span id="U_App_DMX_T">45</span></li>
+		<div class="slidercontainer"><input  onchange="majvaleurslider(this)" type="range" min="0" max="127" value="45" class="slider" id="S_U_App_DMX_T"></div>
+		</ol>
+		</div>
+		<form>
+		Fonction : <input type="text" value="Utilité">
+		Valeur : <input type="text" value="0~127">
+		Canal : <input type="text" value="0~127">
+		</form> 
+		<button>Ajouter un canal</button>
+		<button>Modifier le canal</button>
+		<button>Changer la valeur du canal </button>
+		<button>Supprimer le canal</button>
+		</div>
+		</div>
+		<br>
+		<form>
+		ID de l'appareil : <input type="text" value="ID de l'appareil">
+		Nom de l'appareil : <input type="text" value="Nom de l'appareil">
+		<br>
+		<button>Renommer l'appareil</button>
+		<button>Supprimer l'appareil</button>
+		<br>
+		Canal DMX : <input type="text" value="0~512">
+		<button>Modifier le Canal</button><br>
+		Canaux DMX : <input type="text" value="0~512">
+		<button>Modifier les Canaux</button><br>
+		<button>Ajouter un appareil</button>
+		</form> 
+		<br><br>
+		<form>
+		Univers ID : <input type="text" value="Univers ID">
+		</form> 
+		<button>Ajouter un univers</button>
+		<button>Supprimer l'univers</button>
+		</div>
 		</div>
 		
-		
-		<div class="Univers">
-<div class="Appareil">
-<div class="Canal">
-</div>
-</div>
-</div>
-
-	</body>
+	-->
+	
+</body>
 </html>
