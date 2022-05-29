@@ -1,597 +1,68 @@
 <!DOCTYPE html>
 <html lang="fr-FR">
 	<head>
-		<!-- Pour informer -->
-		<title>Page de génération de configuration et d''envoi de message DMX.json</title>
-		<!-- <link rel="icon" type="image/x-icon" href="/path/favicon.ico"> -->
+	<!-- Pour informer -->
+	<title>Page de génération d'une console DMX aui envoi des messages json avec WebSocket</title>
+	<!-- <link rel="icon" type="image/x-icon" href="/path/favicon.ico"> -->
 		
-		<!-- Pour Le CSS (Pour faire joli) -->
-		<style>
-		</style>
-		
-		<!-- DMX Sample -->
-		<script>
-			
-			// Structure au lancement
-            // 1 Spot RGB sur canal 1 avec 3 paramètres sur univers 1 sur IP 162.168.0.77
-			
-            UniDMX = {"Uni":[{"ID":1,"IP":"192.168.0.77","App":[{"AppName":"LED RGB","PosDMX":1,"CanName":["Rouge","Vert","Bleu"],"Can":[50,0,0]}]}]};        
+	<!-- Pour Le CSS (Pour faire joli) 
+	<style>
             
-            
-            // Structure Minimal Vide
-            function Config_Vide()
-			{
-                UniDMX = new Object();
-                UniDMX.Uni = new Array();
-                myOnLoad();
-			}
-            
-			// Structure Démo 1
-            function Config_Demo1()
-			{
-                
-                UniDMX = {"Uni":[{"ID":1,"IP":"192.168.0.77","App":[{"AppName":"Lyre PT LED RGBAU + DS","PosDMX":2,"CanName":["Rouge","Vert","Bleu","Ambre","U-V","Dim","Strobe","Pan","Tilt"],"Can":[50,0,0,0,0,127,0,30,45]},{"AppName":"Spot RGB LED 4 Canaux","PosDMX":12,"CanName":["Rouge","Vert","Blue","Dim"],"Can":[127,63,36,127]}]},{"ID":2,"IP":"192.168.0.92","App":[{"AppName":"Spot RGB 3 Canaux","PosDMX":9,"CanName":["Rouge","Vert","Bleu"],"Can":[0,127,127]}]}]} ;
-				
-                myOnLoad();
-			}  
-            // Structure Démo 2
-            function Config_Demo2()
-			{
-                
-                UniDMX = {"Uni":[{"ID":1,"IP":"127.168.0.77","App":[{"AppName":"Lyre PT LED RGBAU + DS","PosDMX":1,"CanName":["Rouge","Vert","Bleu","Ambre","U-V","Dim","Strobe","Pan","Tilt"],"Can":[50,0,0,0,0,127,0,30,45]},{"AppName":"Spot RGB LED 4 Canaux","PosDMX":12,"CanName":["Rouge","Vert","Blue","Dim"],"Can":[127,63,36,127]}]}]};
-				
-                myOnLoad();
-			}  
-            
-		</script>    
-        
-        <!-- Géneration de la page Web -->
-        
-        <script>
-            
-            function myOnLoad() // Rechargement total de la page
-			{
-                
-                // Changement d'un fichier ?
-                if (Load_UniDMX == true)
-				{
-					if (UniDMX_File)
-					{
-						UniDMX = JSON.parse(UniDMX_File);
-					}
-					Load_UniDMX = false;
-				}
-				
-                // Rendu visuel de la structure
-                DMX_HTML_Render();
-                // Rendu textuel de la structure
-                DMX_JSon_Render();
-			}
-			
-            function DMX_JSon_Render() // Rechargement du rendu textuel
-			{
-				if (document.getElementById("JSonMode").checked)
-				{
-					let JSon_Render = JSON.stringify(UniDMX);
-					JSon_Render += "<hr>";
-					document.getElementById("DMX_JSon_Render").innerHTML = JSon_Render;
-				}
-				else
-				document.getElementById("DMX_JSon_Render").innerHTML = "";
-			}
-            
-			function DMX_HTML_Render() // Rechargement du rendu visuel
-			{
-				let HTML_Dump = "";
-                
-				// Géneration des univers DMX
-                for (let i=0; i < UniDMX.Uni.length ; i++) {
-					// Géneration d'un univers DMX
-					HTML_Dump += "<div class=\"Uni_DMX\">";
-					
-					if (document.getElementById("ConfigMode").checked)
-					{
-						HTML_Dump += "<b><u>Univers : ";
-                        HTML_Dump += UniDMX.Uni[i].ID;
-                        HTML_Dump += "</u></b>";
-                        HTML_Dump += " (IP : ";
-                        HTML_Dump += UniDMX.Uni[i].IP;
-                        
-                        HTML_Dump += " <input id=\"";
-                        HTML_Dump += "InputLan_U" + (i + 1);
-                        HTML_Dump += "\" type=\"text\" placeholder=\"192.168.0.?\">";
-                        
-                        HTML_Dump += " <button id=\"";
-                        HTML_Dump += "ModLan_U";
-                        HTML_Dump += (i + 1);
-                        HTML_Dump += "\" onclick=\"ModLan(this)\">Modifier</button>";
-                        
-                        HTML_Dump += " - App : ";
-                        HTML_Dump += UniDMX.Uni[i].App.length;
-                        HTML_Dump += " <button id=\"";
-                        HTML_Dump += "AddApp_U";
-                        HTML_Dump += (i + 1);
-                        HTML_Dump += "\" onclick=\"AddApp(this)\">Ajouter</button>";
-                        
-                        HTML_Dump += " <button id=\"";
-                        HTML_Dump += "DelApp_U";
-                        HTML_Dump += (i + 1);
-                        HTML_Dump += "\" onclick=\"DelApp(this)\">Supprimer</button>";
-                        
-                        HTML_Dump += ") <br> <br>";
-					}
-					else
-					{
-						HTML_Dump += "<h2>Univers : ";
-                        HTML_Dump += UniDMX.Uni[i].ID;
-                        HTML_Dump += " (IP : ";
-                        HTML_Dump += UniDMX.Uni[i].IP;
-                        if (document.getElementById("ConfigMode_Lan").checked)
-						{
-							HTML_Dump += " <input id=\"";
-							HTML_Dump += "InputLan_U" + (i + 1);
-							HTML_Dump += "\" type=\"text\" placeholder=\"192.168.0.?\">";
-							HTML_Dump += " <button id=\"";
-							HTML_Dump += "ModLan_U";
-							HTML_Dump += (i + 1);
-							HTML_Dump += "\" onclick=\"ModLan(this)\">Modifier</button>";
-						}
-						
-						HTML_Dump += " - Nombre appareils : ";
-                        HTML_Dump += UniDMX.Uni[i].App.length;
-                        
-                        if (document.getElementById("ConfigMode_App").checked)
-						{
-							HTML_Dump += " <button id=\"";
-							HTML_Dump += "AddApp_U";
-							HTML_Dump += (i + 1);
-							HTML_Dump += "\" onclick=\"AddApp(this)\">Ajouter</button>";
-							
-							HTML_Dump += " <button id=\"";
-							HTML_Dump += "DelApp_U";
-							HTML_Dump += (i + 1);
-							HTML_Dump += "\" onclick=\"DelApp(this)\">Supprimer</button>";
-						}
-                        HTML_Dump += ")</h2>";
-					}
-                    
-					// Géneration des appareils
-					for (let k=0; k < UniDMX.Uni[i].App.length ; k++)
-                    {
-						// Géneration d'un appareil
-						
-						// Information de l'appareil
-						HTML_Dump += "<div class=\"App_DMX\">";
-						
-						if (document.getElementById("ConfigMode").checked)
-						{
-                            
-							HTML_Dump += "<b>" + (k + 1) + " - " + UniDMX.Uni[i].App[k].AppName;
-							HTML_Dump += " <input id=\"";
-							HTML_Dump += "InputRen_U" + (i + 1) + "_App" + (k + 1);
-							HTML_Dump += "\" type=\"text\" placeholder=\"Renommer\">";
-							HTML_Dump += "<button id=\"";
-							HTML_Dump += "SendInputRen_U" + (i + 1) + "_App" + (k + 1);
-							HTML_Dump += "\" onclick=\"RenApp(this)\">Modifier</button>";
-							HTML_Dump += "</b> / Cnx : " + UniDMX.Uni[i].App[k].PosDMX;
-							HTML_Dump += " (+" + UniDMX.Uni[i].App[k].Can.length + ")";
-							HTML_Dump += " <input id=\"";
-							HTML_Dump += "InputPosDMX_U" + (i + 1) + "_App" + (k + 1);
-							HTML_Dump += "\" type=\"text\"  min=\"0\" max=\"2048\" placeholder=\"0~512\">";
-							HTML_Dump += "<button id=\"";
-							HTML_Dump += "SendInputPosDMX_U" + (i + 1) + "_App" + (k + 1); 
-							HTML_Dump += "\" onclick=\"ModPosDMX(this)\">Modifier</button>";
-                            
-							HTML_Dump += "<ol>";
-							
-							for (let j=0; j < UniDMX.Uni[i].App[k].Can.length ; j++)
-                            {				
-								HTML_Dump += "<li>";
-                                
-                                // RenCan Button
-                                HTML_Dump += " <button id=\"";
-                                HTML_Dump += "SendCanRen_U" + (i + 1) + "_App" + (k + 1) + "_DMX" + (j + 1);
-                                HTML_Dump += "\" onclick=\"RenCan(this)\">Ren</button> ";
-								
-								HTML_Dump += UniDMX.Uni[i].App[k].CanName[j] + " : ";
-								HTML_Dump += "<span id=\"";
-								HTML_Dump += "U" + (i + 1) + "_App" + (k + 1) + "_DMX" + (j + 1);
-								HTML_Dump += "\">" + UniDMX.Uni[i].App[k].Can[j] + "</span>";
-                                
-                                HTML_Dump += "<input onchange=\"majvaleurslider(this)\" type=\"range\" min=\"0\" max=\"127\" class=\"slider\"";
-								HTML_Dump += "id=\"";
-								HTML_Dump += "S_U" + (i + 1) + "_App" + (k + 1) + "_DMX" + (j + 1);
-								HTML_Dump += "\" value=\"" + UniDMX.Uni[i].App[k].Can[j] + "\">";
-                                
-                                // NewValCan Button
-                                HTML_Dump += " <button id=\"";
-                                HTML_Dump += "SendCanNewVal_U" + (i + 1) + "_App" + (k + 1) + "_DMX" + (j + 1);
-                                HTML_Dump += "\" onclick=\"NewValCan(this)\">Valeur</button>";
-                                
-								HTML_Dump += "</li>";
-							}
-							HTML_Dump += "</ol>";
-						}
-						else
-						{
-							HTML_Dump += "<h3>Appareil " + (k + 1) + " - " + UniDMX.Uni[i].App[k].AppName;
-                            
-                            
-                            if (document.getElementById("ConfigMode_App").checked)
-							{
-								HTML_Dump += " <input id=\"";
-								HTML_Dump += "InputRen_U" + (i + 1) + "_App" + (k + 1);
-								HTML_Dump += "\" type=\"text\" placeholder=\"Renommer\">";
-								HTML_Dump += "<button id=\"";
-								HTML_Dump += "SendInputRen_U" + (i + 1) + "_App" + (k + 1);
-								HTML_Dump += "\" onclick=\"RenApp(this)\">Modifier</button>";
-								
-							}
-                            HTML_Dump += "</h3>";
-                            HTML_Dump += "<ul>";
-							HTML_Dump += "<li>Canal DMX : " + UniDMX.Uni[i].App[k].PosDMX;
-                            
-                            if (document.getElementById("ConfigMode_App").checked)
-							{
-								HTML_Dump += " <input id=\"";
-								HTML_Dump += "InputPosDMX_U" + (i + 1) + "_App" + (k + 1);
-								HTML_Dump += "\" type=\"text\"  min=\"0\" max=\"2048\" placeholder=\"0~512\">";
-								HTML_Dump += "<button id=\"";
-								HTML_Dump += "SendInputPosDMX_U" + (i + 1) + "_App" + (k + 1); 
-								HTML_Dump += "\" onclick=\"ModPosDMX(this)\">Modifier</button>";
-							}
-							
-                            HTML_Dump += "</li><li>Canaux DMX : " + UniDMX.Uni[i].App[k].Can.length + "</li></ul>";
-							
-							// Géneration des canaux
-							HTML_Dump += "<div class=\"Canaux_DMX\">";
-							HTML_Dump += "<ol>";
-							
-							for (let j=0; j < UniDMX.Uni[i].App[k].Can.length ; j++) {				
-								// Géneration d'un canal
-								HTML_Dump += "<div class=\"Canal_DMX\"><li>" + UniDMX.Uni[i].App[k].CanName[j] + " : ";
-								// Géneration de l'ID Valeur
-								HTML_Dump += "<span id=\"";
-								HTML_Dump += "U" + (i + 1) + "_App" + (k + 1) + "_DMX" + (j + 1) + "\">" + UniDMX.Uni[i].App[k].Can[j];
-								HTML_Dump += "</span>";
-								// Géneration du slider
-								HTML_Dump += "</li><div class=\"slidercontainer\">";
-                                HTML_Dump += "<input ";
-								HTML_Dump += "onchange=\"majvaleurslider(this)\" type=\"range\" min=\"0\" max=\"127\" class=\"slider\"";
-								// Géneration de l'ID du  du canal
-								HTML_Dump += "id=\"";
-								HTML_Dump += "S_U" + (i + 1) + "_App" + (k + 1) + "_DMX" + (j + 1) + "\"";
-								// Value par défault
-								HTML_Dump += " value=\"" + UniDMX.Uni[i].App[k].Can[j] + "\">";
-								// Géneration du slider terminé
-								HTML_Dump += "</div>";
-								// Géneration d'un canal terminé
-								HTML_Dump += "</div>";
-                                
-                                if (document.getElementById("ConfigMode").checked || document.getElementById("ConfigMode_Can").checked)
-                                {
-                                    // RenCan Button
-                                    HTML_Dump += " <button id=\"";
-                                    HTML_Dump += "SendCanRen_U" + (i + 1) + "_App" + (k + 1) + "_DMX" + (j + 1);
-                                    HTML_Dump += "\" onclick=\"RenCan(this)\">Renommer</button>";
-									
-                                    // NewValCan Button
-                                    HTML_Dump += " <button id=\"";
-                                    HTML_Dump += "SendCanNewVal_U" + (i + 1) + "_App" + (k + 1) + "_DMX" + (j + 1);
-                                    HTML_Dump += "\" onclick=\"NewValCan(this)\">Valeur</button>";
-								}
-							}
-							//  Géneration des canaux Terminé
-							HTML_Dump += "</ol></div>";	
-							//  Géneration de l'appareil Terminé
-						}
-						
-						HTML_Dump += "</div>";
-						
-						if (document.getElementById("ConfigMode").checked || document.getElementById("ConfigMode_Can").checked)
-						{
-							HTML_Dump += "Paramètre : <input id=\"NameForNewCan_U" + (i + 1) + "_App" + (k + 1) + "\" type=\"text\" placeholder=\"Fonction\">";
-							HTML_Dump += "<input id=\"ValForNewCan_U" + (i + 1) + "_App" + (k + 1);
-							HTML_Dump += "\" type=\"text\" min=\"0\" max=\"127\" placeholder=\"0~127\">";
-							HTML_Dump += "<button id=\"SendNewCan_U" + (i + 1) + "_App" + (k + 1);
-							HTML_Dump += "\" onclick=\"AddCan(this)\">+</button>";
-							HTML_Dump += "<button id=\"DelLastCan_U" + (i + 1) + "_App" + (k + 1);
-							HTML_Dump += "\" onclick=\"DelCan(this)\">-</button>";
-							HTML_Dump += "<br><br>";							
-						}
-					}
-					//  Géneration de l'univers terminé
-                    
-                    if (document.getElementById("ConfigMode").checked)
-					HTML_Dump += "</div><hr>";
-                    
-				}
-                
-                if (document.getElementById("ConfigMode").checked || document.getElementById("ConfigMode_Uni").checked)
-				{
-					HTML_Dump += " <button id=\"AddUnivers\" onclick=\"AddUni(this)\">Ajouter un univers</button>";
-					HTML_Dump += " <button id=\"DelUni\" onclick=\"DelUni(this)\">Supprimer un univers</button>";
-					HTML_Dump += "<br>";
-				}
-                document.getElementById("DMX_HTML_Render").innerHTML = HTML_Dump;
-			}
-			
-		</script>    
-        
+        </style>
+ 	-->
+   
         <!-- Modification de la structure -->
+        <script src="./DMXSetup.js"></script>
         
-        <script>
-            
-            // Modification des univers
-            
-            function AddUni(element) // Ajoute un univers à la fin du tableau
-            {
-				// Incrément des univers disponibles
-				var GalaxySize;
-				GalaxySize = UniDMX.Uni.length;
-				UniDMX.Uni.push();
-				UniDMX.Uni[GalaxySize] = new Array();
-				UniDMX.Uni[GalaxySize] = new Object();
-				UniDMX.Uni[GalaxySize].ID = (GalaxySize + 1);
-                UniDMX.Uni[GalaxySize].IP = "127.0.0.1";
-                UniDMX.Uni[GalaxySize].App = new Array();
-				
-				myOnLoad();
-			}
-            
-            function DelUni(element) // Supprime le dernier univers du tableau
-            {
-                var GalaxySize = UniDMX.Uni.length;
-                if (GalaxySize)
-				UniDMX.Uni.pop();
-				
-                myOnLoad();
-			}
-            
-            function ModLan(element) // Modifie l'adresse de l'univers
-            {
-				// Exemple : element.id => InputLan_U1
-				var LanUniID = element.id;			
-				var LanUniIDsplit = LanUniID.split("_");
-				var IDUniver = LanUniIDsplit[1];
-				var ValUniver = IDUniver.slice(1); // On vire "U" de l'ID
-				var TextForNewLan = "InputLan_U" + ValUniver;
-				var NewLan = document.getElementById(TextForNewLan).value;
-				UniDMX.Uni[(ValUniver - 1)].IP = NewLan;
-				
-				myOnLoad();
-			}
-            
-            UniDMX_File = "";
-            Load_UniDMX = false;
-            
-            function LoadFileDMXJSon()
-            {
-                let file = document.getElementById("LoadFile").files[0];
-                let fileReader = new FileReader();
-                fileReader.readAsText(file);
-                fileReader.onload = function() { UniDMX_File = fileReader.result; Load_UniDMX = true; myOnLoad(); };
-                fileReader.onerror = function() { alert(fileReader.error); };
-			}
-            
-            function SaveFileDMXJSon()
-            {  
-                console.log(JSON.stringify(UniDMX));
-			}   
-            
-            // Modification des Appareils
-            
-			function AddApp(element) // Ajoute un appareil à la fin du tableau
-			{
-				var AddAppID = element.id;
-                var IDsplit = AddAppID.split("_");
-                var IDUni = IDsplit[1];
-                var ValUniver = IDUni.slice(1); // On vire "U"de l'ID          
-                var AppPos = UniDMX.Uni[(ValUniver - 1)].App.length;      
-                UniDMX.Uni[(ValUniver -1)].App[AppPos] = new Object();
-                UniDMX.Uni[(ValUniver -1)].App[AppPos].CanName = new Array();
-                UniDMX.Uni[(ValUniver -1)].App[AppPos].Can = new Array();
-                UniDMX.Uni[(ValUniver -1)].App[AppPos].AppName = "Appareil ";
-                UniDMX.Uni[(ValUniver -1)].App[AppPos].AppName += (AppPos + 1) ;
-			    UniDMX.Uni[(ValUniver -1)].App[AppPos].PosDMX = 1;
+        <!-- G�neration de la page Web -->
+		<!-- DMX Sample -->
+        <script src="./DMXRender.js"></script>
+
+        <!-- Communication avec le "serveur" -->
+        
+        <!-- <script src="/socket.io/socket.io.js"></script> -->
+        <script src="./node_modules/socket.io/client-dist/socket.io.js"></script>
+        
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.min.js" integrity="sha512-mHO4BJ0ELk7Pb1AzhTi3zvUeRgq3RXVOu9tTRfnA6qOxGK4pG2u57DJYolI4KrEnnLTcH9/J5wNOozRTDaybXg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+        <script src="./DMXWS.js"></script>
                 
-				myOnLoad();
-			}
-            
-            function DelApp(element) // Supprime le dernier appareil à la fin du tableau
-			{
-                var DelAppUniID = element.id;
-				var DelAppUnisplit = DelAppUniID.split("_");
-                var DelAppUni = DelAppUnisplit[1];
-                var ValUniver = DelAppUni.slice(1); // On vire "U"de l'ID
-                if (UniDMX.Uni[(ValUniver - 1)].App.length)
-				UniDMX.Uni[(ValUniver - 1)].App.pop();
-                
-                myOnLoad();
-			}
-            
-            function ModPosDMX(element) // Modifie la canal DMX de l'appareil
-            {
-				var PosDMXID = element.id;
-				var PosDMXIDsplit = PosDMXID.split("_");
-				var IDUniver = PosDMXIDsplit[1];
-				var IDApp = PosDMXIDsplit[2];
-				var ValUniver = IDUniver.slice(1); // On vire "U"de l'ID
-				var ValApp = IDApp.slice(3); // On vire "App"de l'ID
-				var IDNewPosDMX = PosDMXID.slice(4); // On vire "Send"de l'ID
-				var NewPosDMX = document.getElementById(IDNewPosDMX).value;
-				if (0 < NewPosDMX && NewPosDMX < 2048)
-				UniDMX.Uni[(ValUniver - 1)].App[(ValApp - 1)].PosDMX = NewPosDMX;
-				
-                myOnLoad();
-			}
-            
-            function RenApp(element) // Renomme l'appareil
-            {
-				
-				var RenID = element.id;
-				var RenIDsplit = RenID.split("_");
-				var IDUniver = RenIDsplit[1];
-				var IDApp = RenIDsplit[2];
-				var ValUniver = IDUniver.slice(1); // On vire "U"de l'ID
-				var ValApp = IDApp.slice(3); // On vire "App"de l'ID
-				var IDNewName = RenID.slice(4); // On vire "Send"de l'ID
-				var NewName = document.getElementById(IDNewName).value
-				if (NewName)
-				UniDMX.Uni[(ValUniver - 1)].App[(ValApp - 1)].AppName = NewName;
-				
-				myOnLoad();
-			}
-            
-            // Modification des Paramètres
-            
-            function AddCan(element) // Ajoute un paramètre à la fin du tableau
-			{
-				// Exemple : element.id = SendNewCan_U1_App1
-                var CanAddID = element.id;
-				var CanAddIDsplit = CanAddID.split("_");
-				var IDUniver = CanAddIDsplit[1];
-				var IDApp = CanAddIDsplit[2];
-				var ValUniver = IDUniver.slice(1); // On vire "U" de l'ID
-				var ValApp = IDApp.slice(3); // On vire "App" de l'ID
-                var Nbr_app = UniDMX.Uni[(ValUniver - 1)].App[(ValApp - 1)].Can.length;
-                var NameForNewCan = "NameForNewCan_U" + ValUniver + "_App" + ValApp; 
-                var InputRegVal = "ValForNewCan_U" + ValUniver + "_App" + ValApp;
-                var NewName = document.getElementById(NameForNewCan).value;
-                var NewVal = document.getElementById(InputRegVal).value;              
-                if ((-1) < NewVal && NewVal < 128)
-				{
-					UniDMX.Uni[(ValUniver - 1)].App[(ValApp - 1)].CanName.push(NewName);
-					UniDMX.Uni[(ValUniver - 1)].App[(ValApp - 1)].Can.push(NewVal);
-				}
-                
-                myOnLoad();
-			}
-            
-            function DelCan(element) // Supprime le dernier paramètre à la fin du tableau
-			{
-                // Exemple : element.id = "DelLastCan_U1_App1"
-                var DelID = element.id;
-				var DelIDsplit = DelID.split("_");
-				var IDUniver = DelIDsplit[1];
-				var IDApp = DelIDsplit[2];
-				var ValUniver = IDUniver.slice(1); // On vire "U" de l'ID
-				var ValApp = IDApp.slice(3); // On vire "App" de l'ID
-                UniDMX.Uni[(ValUniver - 1)].App[(ValApp - 1)].CanName.pop();
-				UniDMX.Uni[(ValUniver - 1)].App[(ValApp - 1)].Can.pop();
-                
-				myOnLoad();
-			}
-            
-            function RenCan(element) // Renomme un paramètre
-            {
-				// Exemple : element.id => SendCanRen_U1_App1_DMX5
-				var CanRenID = element.id;
-				var CanRenIDsplit = CanRenID.split("_");
-				var IDUniver = CanRenIDsplit[1];
-				var IDApp = CanRenIDsplit[2];
-				var IDDMX = CanRenIDsplit[3];
-				var ValUniver = IDUniver.slice(1); // On vire "U" de l'ID
-				var ValApp = IDApp.slice(3); // On vire "App" de l'ID
-				var ValDMX = IDDMX.slice(3); // On vire "DMX" de l'ID
-				var NameForNewCan = "NameForNewCan_U" + ValUniver + "_App" + ValApp;
-				var NewName = document.getElementById(NameForNewCan).value;
-				UniDMX.Uni[(ValUniver - 1)].App[(ValApp - 1)].CanName[(ValDMX - 1)] = NewName;
-				
-				myOnLoad();
-			}
-            
-            function NewValCan(element) // Modifie la valeur du paramètre
-            {
-                // Exemple : element.id => SendCanRen_U1_App1_DMX5
-                var NewValCanID = element.id;
-                var NewValCansplit = NewValCanID.split("_");
-                var IDUniver = NewValCansplit[1];
-                var IDApp = NewValCansplit[2];
-                var IDDMX = NewValCansplit[3];
-                var ValUniver = IDUniver.slice(1); // On vire "U" de l'ID
-                var ValApp = IDApp.slice(3); // On vire "App" de l'ID
-                var ValDMX = IDDMX.slice(3); // On vire "DMX" de l'ID
-                var ValForNewCan = "ValForNewCan_U" + ValUniver + "_App" + ValApp;
-                var NewVal = document.getElementById(ValForNewCan).value;
-                if (((-1) < NewVal) && (NewVal < 128))
-				{
-					if (NewVal)
-					var parsed = parseInt(NewVal, 10);
-					else
-					parsed = 0;
-                    UniDMX.Uni[(ValUniver - 1)].App[(ValApp - 1)].Can[(ValDMX - 1)] = parsed;    
-				}
-                
-                myOnLoad();
-			}
-            
-            function majvaleurslider(element)
-            {
-				var sliderID = element.id;
-				var sliderValue = document.getElementById(element.id).value;
-				var sliderDump = sliderID.slice(2);
-				document.getElementById(sliderDump).innerHTML = sliderValue; // Mise à jour du texte du Slider
-				sliderID = element.id;
-				var sliceIDsplit = sliderID.split("_");
-				var sliceUniver = sliceIDsplit[1]; // La partie Univers
-				var sliceApp = sliceIDsplit[2]; // La partie App
-				var sliceDMX = sliceIDsplit[3]; // La partie DMX
-				var ValUniver = sliceUniver.slice(1);  // On vire "U" de l'ID
-				var ValApp = sliceApp.slice(3); // On vire "App"de l'ID
-				var ValDMX = sliceDMX.slice(3); // On vire "DMX"de l'ID
-                
-                UniDMX.Uni[(ValUniver - 1)].App[(ValApp - 1)].Can[(ValDMX - 1)] = sliderValue; // Mise à jour du JSon
-                DMX_JSon_Render();
-				
-                /***  Send information to ESP32/8266  ***/
-					// websocket.send(Number + "s" + Value.toString());
-					let can = parseInt(UniDMX.Uni[(ValUniver - 1)].App[(ValApp - 1)].PosDMX) + parseInt(ValDMX - 1 );
-					
-					// console.log("Canal : " + can);
-					
-					SendDMXOrder(UniDMX.Uni[(ValUniver - 1)].IP, can, sliderValue);
-					
-				}
-				
-				// Modification du serveur
-				
-				function SendDMXOrder(addresse, canal, valeur)
-				{
-					console.log("Massage à envoyer sur IP " + addresse + ", Canal " + canal + " avec la valeur " + valeur);
-					console.log("type : ws://" + addresse + "/signal?c:" + canal + "&v:" + valeur);
-				}
-				
-			</script>		
-			
-		</head>
-		<body onload="myOnLoad()">
-			
-			<div class="render">
-				<h1>Page de génération de DMX_Appareils.json</h1>
-				
-				<button id="Config_Demo" onclick="Config_Demo1()">Demo 1</button>
-				<button id="Config_Demo" onclick="Config_Demo2()">Demo 2</button>
-				<button id="Config_Zero" onclick="Config_Vide()">Reset</button>
-				<input id="LoadFile" type="file" name="LoadFile" accept=".json, .txt">
-				<button id="Config_load" onclick="LoadFileDMXJSon()">Charger</button>
-				<button id="Config_Save" onclick="SaveFileDMXJSon()">Dump Console</button>
-				<br>
-				<input type="checkbox" id="ConfigMode_Uni"  name="ConfigMode_Uni" onclick="myOnLoad()" > Config Univers
-				<input type="checkbox" id="ConfigMode_App"  name="ConfigMode_App" onclick="myOnLoad()" > Config Appareils
-				<input type="checkbox" id="ConfigMode_Can"  name="ConfigMode_Can" onclick="myOnLoad()" > Config Canaux
-				<input type="checkbox" id="JSonMode"  name="JsonMode" onclick="myOnLoad()" checked> Strucure Json
-				<input type="checkbox" id="ConfigMode_Lan"  name="ConfigMode_Lan" onclick="myOnLoad()" > Config Réseaux
-				<input type="checkbox" id="ConfigMode"  name="ConfigMode" onclick="myOnLoad()" checked> Config Mode
-				<hr>			
-				<div id="DMX_JSon_Render"> Espace de rendu généré en JavaScript de l'objet JSon</div>
-				<div id="DMX_HTML_Render"> Espace de rendu généré en HTML avec du JavaScript</div>
-				<hr>
-				<div> A implementer : 
-					<ul>
-						<li>Envoi de requête Web sur IP de l'univers</li>
-					</ul>
-				</div>
-			</div>
-		</body>
-	</html>
+	</head>
+    
+	<body onload="myOnLoad()">
+		<div class="render">
+            <h1>Console DMX (+ json vers WebSocket (en implémentation, voir avec retour)) </h1>
+
+            <button id="Config_Demo" onclick="Config_Demo1()">Demo 1</button>
+            <button id="Config_Demo" onclick="Config_Demo2()">Demo 2</button>
+            <button id="Config_Zero" onclick="Config_Vide()">Reset</button>
+            <input id="LoadFile" type="file" name="LoadFile" accept=".json, .txt">
+            <button id="Config_load" onclick="LoadFileDMXJSon()">Charger</button>
+            <button id="Config_Save" onclick="SaveFileDMXJSon()">Dump Console</button>
+            <br>
+            <input type="checkbox" id="ConfigMode_Uni"  name="ConfigMode_Uni" onclick="myOnLoad()" > Config Univers
+            <input type="checkbox" id="ConfigMode_App"  name="ConfigMode_App" onclick="myOnLoad()" > Config Appareils
+            <input type="checkbox" id="ConfigMode_Can"  name="ConfigMode_Can" onclick="myOnLoad()" > Config Canaux
+            <input type="checkbox" id="JSonMode"  name="JsonMode" onclick="myOnLoad()" checked> Strucure Json
+            <input type="checkbox" id="ConfigMode_Lan"  name="ConfigMode_Lan" onclick="myOnLoad()" checked> Config Réseaux
+            <input type="checkbox" id="ConfigMode"  name="ConfigMode" onclick="myOnLoad()" checked> Config Mode
+            <hr>			
+            <div id="Lan_Render"> Espace de rendu généré en JavaScript de l'objet WSSS</div>
+            <div id="DMX_JSon_Render"> Espace de rendu généré en JavaScript de l'objet UniDMX</div>
+            <div id="DMX_HTML_Render"> Espace de rendu généré en HTML avec du JavaScript</div>
+            <hr>
+            <div> A implementer : 
+                <ul>
+                    <li>Envoi de requête Web sur IP de l'univers</li>
+                </ul>
+            </div>
+		</div>
+        
+        <div class="chat">
+            <ul id="messages"></ul>
+            <form id="form" action="">
+                <input id="input" autocomplete="off" /><button>Send</button>
+            </form>            
+        </div>
+        
+	</body>
+</html>
