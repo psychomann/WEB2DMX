@@ -1,4 +1,4 @@
-# ESP-HTML+JSON2DMX
+# WEB2DMX
 
 ## Description
 Envoyer une requête depuis le Web (avec une page HTML ou une API) à un serveur embarqué sur une carte ESP (32 ou 8266) connecté en Wi-Fi sur un bus DMX (XLR 3 broches)
