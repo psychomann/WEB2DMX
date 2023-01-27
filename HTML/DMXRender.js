@@ -195,7 +195,7 @@ function myOnLoad() // Rechargement total de la page
 								HTML_Dump += "U" + (i + 1) + "_App" + (k + 1) + "_DMX" + (j + 1);
 								HTML_Dump += "\">" + UniDMX.Uni[i].App[k].Can[j] + "</span>";
                                 
-                                HTML_Dump += "<input onchange=\"majvaleurslider(this)\" type=\"range\" min=\"0\" max=\"127\" class=\"slider\"";
+                                HTML_Dump += "<input onchange=\"majvaleurslider(this)\" type=\"range\" min=\"0\" max=\"255\" class=\"slider\"";
 								HTML_Dump += "id=\"";
 								HTML_Dump += "S_U" + (i + 1) + "_App" + (k + 1) + "_DMX" + (j + 1);
 								HTML_Dump += "\" value=\"" + UniDMX.Uni[i].App[k].Can[j] + "\">";
@@ -254,7 +254,7 @@ function myOnLoad() // Rechargement total de la page
 								// Géneration du slider
 								HTML_Dump += "</li><div class=\"slidercontainer\">";
                                 HTML_Dump += "<input ";
-								HTML_Dump += "onchange=\"majvaleurslider(this)\" type=\"range\" min=\"0\" max=\"127\" class=\"slider\"";
+								HTML_Dump += "onchange=\"majvaleurslider(this)\" type=\"range\" min=\"0\" max=\"255\" class=\"slider\"";
 								// Géneration de l'ID du  du canal
 								HTML_Dump += "id=\"";
 								HTML_Dump += "S_U" + (i + 1) + "_App" + (k + 1) + "_DMX" + (j + 1) + "\"";
@@ -289,7 +289,7 @@ function myOnLoad() // Rechargement total de la page
 						{
 							HTML_Dump += "Paramètre : <input id=\"NameForNewCan_U" + (i + 1) + "_App" + (k + 1) + "\" type=\"text\" placeholder=\"Fonction\">";
 							HTML_Dump += "<input id=\"ValForNewCan_U" + (i + 1) + "_App" + (k + 1);
-							HTML_Dump += "\" type=\"text\" min=\"0\" max=\"127\" placeholder=\"0~127\">";
+							HTML_Dump += "\" type=\"text\" min=\"0\" max=\"255\" placeholder=\"0~255\">";
 							HTML_Dump += "<button id=\"SendNewCan_U" + (i + 1) + "_App" + (k + 1);
 							HTML_Dump += "\" onclick=\"AddCan(this)\">+</button>";
 							HTML_Dump += "<button id=\"DelLastCan_U" + (i + 1) + "_App" + (k + 1);
