@@ -19,12 +19,12 @@ WiFiManager wm;
 
 // Les paramètres Wifi locaux inscrit dans les .gitignore pour pas se retrouver en publique sur le net.
 
-#include "wifi_access.env.h" // si absent utiliser :  "wifi_access.env.sample.h"
-
-// Dans wifi_access.env.h, il y a :
-/*
-#define WIFI_SSID_SOLO "ESP2DMX_SOLO"
+// #include "wifi_access.env.h"
+#include "wifi_access.env.sample.h"
+/* // ou bien :
+#define WIFI_SSID_SOLO "ESP_2_DMX"
 #define WIFI_PWD_SOLO "dmx4show"
+
 #define WIFI_SSID_HOME "Home_Wifi"
 #define WIFI_PWD_HOME "G-+hubSEeMnic3IFy0uC4NuseIT,Ican'tMAKEitWorksS0rrybr0S"
 */

@@ -1,32 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ledPin refers to ESP32 GPIO 23
 #define LED_BUILTIN 2
 
