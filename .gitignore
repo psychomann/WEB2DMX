@@ -1,2 +1,13 @@
+# Ligne commentaire ignorée
+# * pour une subtitution genre *.txt pour tout les fichier <quelque chose>.txt
+
+## Fichier personnel à ne pas diffuser : 
+# Fichier de configuration du Wifi à la maison
+
+# Exemples :
+# wifi_access.*
+# wifi_access.env.h
+# wifi_access.h
+
 wifi_access.env.h
 wifi_access.h
