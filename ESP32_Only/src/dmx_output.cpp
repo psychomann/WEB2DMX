@@ -3,7 +3,7 @@
 
 /* Partie DMX */
 
-#include "ESPDMX.h"
+#include <ESPDMX.h>
 
 // GPIO_D4 "D4" == 2
 DMXESPSerial dmx_device;

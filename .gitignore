@@ -11,3 +11,6 @@
 
 wifi_access.env.h
 wifi_access.h
+
+# En cas d'échec utiliser > git reset HEAD~x (avec x nombre de dépot à supprimer depuis le dernier dépot)
+# il existes des solutions alternative ... j'ai pas compris comment ça marche -_-
