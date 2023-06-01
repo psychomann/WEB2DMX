@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+	<head>
+		<!-- Pour informer -->
+		<title>Page de référence pour l'interface de controle en HTML</title>
+		<!-- <link rel="icon" type="image/x-icon" href="/path/favicon.ico"> -->
+		
+		<!-- Pour Le CSS (Pour faire joli) -->
+		<style>
+		</style>
+		</head><body>
+		<!--- Gabarit référence pour le rendu de l'interface HTML--->
+		<div class="rendu">	
+			<br><br><hr><h2><b><u>Rendu Attendu : </u></b></h2><hr>
+			<div class="Univers">
+				<h2>Univers 1</h2>
+				<div class="Appareil">
+					<h3>Appareil 1 - Lyre PT LED RGBAU + DS</h3>
+					<div class="RéglagesDMX">
+						<ul>
+							<li>Canal DMX : 1</li>
+							<li>Canaux DMX : 9</li>
+						</ul>
+						<div class="RéglagesCanauxDMX">
+							<ol>
+								<li>Rouge : <span id="U_App_DMX_R">50</span></li>
+								<div class="slidercontainer"><input onchange="majvaleurslider(this)" type="range" min="0" max="255" value="50" class="slider" id="S_U_App_DMX_R"></div>
+								<li>Vert : <span id="U_App_DMX_V">0</span></li>
+								<div class="slidercontainer"><input onchange="majvaleurslider(this)"  type="range" min="0" max="255" value="0" class="slider" id="S_U_App_DMX_V"></div>
+								<li>Bleu : <span id="U_App_DMX_B">0</span></li>
+								<div class="slidercontainer"><input onchange="majvaleurslider(this)"  type="range" min="0" max="255" value="0" class="slider" id="S_U_App_DMX_B"></div>
+								<li>Ambre : <span id="U_App_DMX_A">0</span></li>
+								<div class="slidercontainer"><input onchange="majvaleurslider(this)"  type="range" min="0" max="255" value="0" class="slider" id="S_U_App_DMX_A"></div>
+								<li>Ultra-Violet : <span id="U_App_DMX_U">0</span></li>
+								<div class="slidercontainer"><input onchange="majvaleurslider(this)"  type="range" min="0" max="255" value="0" class="slider" id="S_U_App_DMX_U"></div>
+								<li>Dim : <span id="U_App_DMX_D">127</span></li>
+								<div class="slidercontainer"><input onchange="majvaleurslider(this)"  type="range" min="0" max="255" value="127" class="slider" id="S_U_App_DMX_D"></div>
+								<li>Strobe : <span id="U_App_DMX_S">0</span></li>
+								<div class="slidercontainer"><input onchange="majvaleurslider(this)"  type="range" min="0" max="255" value="0" class="slider" id="S_U_App_DMX_S"></div>
+								<li>Pan : <span id="U_App_DMX_P">30</span></li>
+								<div class="slidercontainer"><input onchange="majvaleurslider(this)"  type="range" min="0" max="255" value="30" class="slider" id="S_U_App_DMX_P"></div>
+								<li>Tilt : <span id="U_App_DMX_T">45</span></li>
+								<div class="slidercontainer"><input  onchange="majvaleurslider(this)" type="range" min="0" max="255" value="45" class="slider" id="S_U_App_DMX_T"></div>
+							</ol>
+						</div>
+						<form>
+							Fonction : <input type="text" value="Utilité">
+							Valeur : <input type="text" value="0~127">
+							Canal : <input type="text" value="0~127">
+						</form> 
+						<button>Ajouter un canal</button>
+						<button>Modifier le canal</button>
+						<button>Changer la valeur du canal </button>
+						<button>Supprimer le canal</button>
+					</div>
+				</div>
+				<br>
+				<form>
+					ID de l'appareil : <input type="text" value="ID de l'appareil">
+					Nom de l'appareil : <input type="text" value="Nom de l'appareil">
+					<br>
+					<button>Renommer l'appareil</button>
+					<button>Supprimer l'appareil</button>
+					<br>
+					Canal DMX : <input type="text" value="0~512">
+					<button>Modifier le Canal</button><br>
+					Canaux DMX : <input type="text" value="0~512">
+					<button>Modifier les Canaux</button><br>
+					<button>Ajouter un appareil</button>
+				</form> 
+				<br><br>
+				<form>
+					Univers ID : <input type="text" value="Univers ID">
+				</form> 
+				<button>Ajouter un univers</button>
+				<button>Supprimer l'univers</button>
+			</div>
+		</div>
+	</body>
+</html>

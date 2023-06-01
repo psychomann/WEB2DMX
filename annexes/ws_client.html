@@ -1,0 +1,13 @@
+<html>
+  <head>
+    <title>Connection à un server Websocket (127.0.0.1:1337)</title>
+    <script>
+      const ws = new WebSocket("ws://localhost:1337");
+      // Lors d'une connection
+      ws.onopen = () => console.log("conneciton établie");
+      ws.onmessage = (msg) =>
+        console.log("message depuis le serveur : ", msg.data);
+    </script>
+  </head>
+  <body></body>
+</html>

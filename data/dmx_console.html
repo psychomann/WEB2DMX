@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+  <head>
+    <!-- Pour informer -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>
+      Page de génération d'une console DMX qui envoi des messages par WebSocket
+    </title>
+    <!-- <link rel="icon" type="image/x-icon" href="/path/favicon.ico"> -->
+    <!-- Pour Le CSS (Pour faire joli) 
+	<style>
+            
+        </style>
+ 	-->
+    <!-- Modification de la structure -->
+
+    <!-- DMX Setups -->
+    <script src="./dmx_setup.js"></script>
+    <!-- Fonctions du setup des univers -->
+    <script src="./dmx_setup_uni.js"></script>
+    <!-- Fonctions du setup des cannaux -->
+    <script src="./dmx_setup_can.js"></script>
+    <!-- Fonctions du setup des appareils -->
+    <script src="./dmx_setup_app.js"></script>
+    <!-- Fonctions de modifications des valeurs -->
+    <script src="./dmx_setup_val.js"></script>
+    <!-- Fonctions du setup depuis un fichier -->
+    <script src="./dmx_setup_files.js"></script>
+    <!-- Géneration de la page Web -->
+    <script src="./dmx_page_render.js"></script>
+    <!-- DMX Sample -->
+    <script src="./dmx_configs.js"></script>
+    <!-- Communications réseaux -->
+    <script src="./dmx_setup_lan.js"></script>
+    <!-- Communications WebSocket -->
+    <script src="./dmx_setup_io.js"></script>
+
+    <!-- Librairie pour les Websockets -->
+    <!-- Version avec debug -->
+    <!-- <script src="/socket.io.js"></script> -->
+    <!-- Version "min"pour miniaturisation -->
+    <!-- <script src="./socket.io.min.js"></script> -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.min.js"
+      integrity="sha512-mHO4BJ0ELk7Pb1AzhTi3zvUeRgq3RXVOu9tTRfnA6qOxGK4pG2u57DJYolI4KrEnnLTcH9/J5wNOozRTDaybXg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <!-- pour recuperer son IP en JavaScript
+    <script type="application/javascript">
+      $(function() {
+        $.getJSON("https://api.ipify.org?format=jsonp&callback=?",
+          function(json) {
+            document.write("My public IP address is: ", json.ip);
+          }
+        );
+      });
+    </script>
+    -->
+  </head>
+
+  <body onload="DMXLoad()">
+    <div class="render">
+      <h1>Console DMX par WebSocket (Next update : JSon)</h1>
+
+      <button id="Config_Demo" onclick="Config_Demo1()">Demo 1</button>
+      <button id="Config_Demo" onclick="Config_Demo2()">Demo 2</button>
+      <button id="Config_Zero" onclick="Config_Vide()">Reset</button>
+      <input id="LoadFile" type="file" name="LoadFile" accept=".json, .txt" />
+      <button id="Config_load" onclick="LoadFileDMXJSon()">Charger</button>
+      <button id="Config_Save" onclick="SaveFileDMXJSon()">Dump Console</button>
+      <br />
+      <!-- Si besoin de le valider de base : utiliser "checked"avant la fermeture de imput -->
+      <input
+        type="checkbox"
+        id="ConfigMode_Uni"
+        name="ConfigMode_Uni"
+        onclick="DMXLoad()"
+      />
+      Config Univers
+      <input
+        type="checkbox"
+        id="ConfigMode_App"
+        name="ConfigMode_App"
+        onclick="DMXLoad()"
+      />
+      Config Appareils
+      <input
+        type="checkbox"
+        id="ConfigMode_Can"
+        name="ConfigMode_Can"
+        onclick="DMXLoad()"
+      />
+      Config Canaux
+      <input
+        type="checkbox"
+        id="JSonMode"
+        name="JsonMode"
+        onclick="DMXLoad()"
+      />
+      Strucure Json
+      <input
+        type="checkbox"
+        id="ConfigMode_Lan"
+        name="ConfigMode_Lan"
+        onclick="DMXLoad()"
+      />
+      Config Réseaux
+      <input
+        type="checkbox"
+        id="ConfigMode"
+        name="ConfigMode"
+        onclick="DMXLoad()"
+      />
+      Config Mode
+      <hr />
+      <div id="Lan_Render">
+        Espace de rendu généré en JavaScript de l'objet WSSS
+      </div>
+      <div id="DMX_JSon_Render">
+        Espace de rendu généré en JavaScript de l'objet UniDMX
+      </div>
+      <div id="DMX_HTML_Render">
+        Espace de rendu généré en HTML avec du JavaScript
+      </div>
+      <hr />
+    </div>
+
+    <!-- Reste des test de Chat avec WebScoket
+    <div class="chat">
+      <ul id="messages"></ul>
+      <form id="form" action="">
+        <input id="input" autocomplete="off" />
+        <button>Send</button>
+      </form>
+    </div>
+    -->
+  </body>
+</html>
