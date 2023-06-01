@@ -118,6 +118,6 @@ void loop()
   }
 
   server.handleClient();
-  dmx_device.update(); // <= Bug : blackout au bout de 1~2 secondes sans "update()"
+  dmx_device.update(); // <= Bug : blackout au bout de 1~2 secondes si absent
   delay(2); // allow the cpu to switch to other tasks
 }

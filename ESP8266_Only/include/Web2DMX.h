@@ -1,3 +1,5 @@
+#define DMX_CAN_FOR_U 128
+
 /* depuis dmx_output.cpp */
 void DMX_Order(int channel, int value);
 void DMX_parse_Order(char *payload);

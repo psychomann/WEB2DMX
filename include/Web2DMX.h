@@ -1,4 +1,6 @@
+/* Utilisé dans main.cpp */
 #define DMX_CAN_FOR_U 128
+
 
 /* depuis dmx_output.cpp */
 void DMX_Order(int channel, int value);
@@ -27,6 +29,10 @@ void load_siomin(void);
 void load_css(void);
 void load_test(void);
 void load_wifi_reset(void);
+
+
+/* depuis lan_wifi.cpp */
+void wifi_setup(void);
 
 /* depuis lan_ws.cpp */
 

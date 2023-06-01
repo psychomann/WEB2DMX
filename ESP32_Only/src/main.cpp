@@ -14,7 +14,7 @@ extern const char *pwd_solo;
 extern const char *ssid_home;
 extern const char *pwd_home;
 
-#include "ESPDMX.h"
+#include <ESPDMX.h>
 extern DMXESPSerial dmx_device;    // dmx_output.cpp
 
 #include <WebSocketsServer.h>
