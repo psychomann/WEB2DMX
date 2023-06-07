@@ -5,7 +5,21 @@
 
 #include <ESPDMX.h>
 
-// GPIO_D4 "D4" == 2
+/*  // ESPDMX.cpp
+int sendPin = 2;		// default on ESP8266
+// sendPin à remplacer par 4 sur ESP32 sinon "Download Mode" failed !
+// => impossible de charger le programme
+
+#ifdef ESP8266
+int sendPin = 2;		// default on ESP8266
+#else
+int sendPin = 4;		// default on ESP32
+#endif
+*/
+
+// ESP8266 GPIO_D4 "D4" == 2
+// ESP32   GPIO_D2 "D2" == 2
+// ESP32   GPIO_D4 "D4" == 4
 DMXESPSerial dmx_device;
 
 void DMX_Order(int channel, int value)
@@ -47,7 +61,7 @@ void DMX_parse_Order(char *payload)
     Serial.printf("DMX_parse_Order : La valeur pour le canal est éronnée (%i) sur [0-255], elle est mise à 255\n", valeur);
     valeur = 255;
   }
-  
+
   // Serial.printf("%s / %i pour can, %s / %i pour val \n", channel, cannal, value, valeur);
 
   DMX_Order(cannal, valeur);

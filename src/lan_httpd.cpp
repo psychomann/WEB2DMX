@@ -36,15 +36,12 @@ WebServer server(http_port);
 // Fonction pour charger les fichiers
 String ReadFileToString(const char *filename)
 {
-    /*
+    // Serial.printf("\nReadFileToString(%s)", filename);
     auto file = LittleFS.open(filename, "r");
     // Read into temporary Arduino String
     String data = file.readString();
     // Don't forget to clean up!
-    file.close();
-    */
-    String data;
-    
+    file.close(); 
     return data;
 }
 
@@ -52,14 +49,14 @@ String ReadFileToString(const char *filename)
 
 void load_404()
 {
-    const char *filename = "404.html";
+    const char *filename = "/404.html"; // ajout d'un "/" pour trouver le fichier avec ESP32
     Serial.printf("\nRequête pour une page introuvable (404)");
     server.send(200, "text/html", ReadFileToString(filename));
 }
 
 void load_checkfs()
 {
-    const char *filename = "checkfs.txt";
+    const char *filename = "/checkfs.txt"; // ajout d'un "/" pour trouver le fichier avec ESP32
     Serial.printf("\nRequête pour la page : %s.", filename);
     server.send(200, "text/plain", ReadFileToString(filename));
 }
@@ -175,105 +172,105 @@ void load_get()
 
 void load_dmx_configs()
 {
-    const char *filename = "dmx_configs.js";
+    const char *filename = "/dmx_configs.js"; // ajout d'un "/" pour trouver le fichier avec ESP32
     // Serial.printf("\nRequête pour les scripts dans le fichier %s.", filename);
     server.send(200, "application/javascript", ReadFileToString(filename));
 }
 
 void load_dmx_console()
 {
-    const char *filename = "dmx_console.html";
+    const char *filename = "/dmx_console.html"; // ajout d'un "/" pour trouver le fichier avec ESP32
     // Serial.printf("\nRequête pour la page : %s.", filename);
     server.send(200, "text/html", ReadFileToString(filename));
 }
 
 void load_index()
 {
-    const char *filename = "dmx_console.html";
+    const char *filename = "/dmx_console.html"; // ajout d'un "/" pour trouver le fichier avec ESP32
     // Serial.printf("\nRequête pour la page : %s.", filename);
     server.send(200, "text/html", ReadFileToString(filename));
 }
 
 void load_dmx_page_render()
 {
-    const char *filename = "dmx_page_render.js";
+    const char *filename = "/dmx_page_render.js"; // ajout d'un "/" pour trouver le fichier avec ESP32
     // Serial.printf("\nRequête pour la page : %s.", filename);
     server.send(200, "application/javascript", ReadFileToString(filename));
 }
 
 void load_dmx_setup()
 {
-    const char *filename = "dmx_setup.js";
+    const char *filename = "/dmx_setup.js"; // ajout d'un "/" pour trouver le fichier avec ESP32
     // Serial.printf("\nRequête pour les scripts dans le fichier %s.", filename);
     server.send(200, "application/javascript", ReadFileToString(filename));
 }
 
 void load_dmx_setup_app()
 {
-    const char *filename = "dmx_setup_app.js";
+    const char *filename = "/dmx_setup_app.js"; // ajout d'un "/" pour trouver le fichier avec ESP32
     // Serial.printf("\nRequête pour les scripts dans le fichier %s.", filename);
     server.send(200, "application/javascript", ReadFileToString(filename));
 }
 
 void load_dmx_setup_can()
 {
-    const char *filename = "dmx_setup_can.js";
+    const char *filename = "/dmx_setup_can.js"; // ajout d'un "/" pour trouver le fichier avec ESP32
     // Serial.printf("\nRequête pour les scripts dans le fichier %s.", filename);
     server.send(200, "application/javascript", ReadFileToString(filename));
 }
 
 void load_dmx_setup_files()
 {
-    const char *filename = "dmx_setup_files.js";
+    const char *filename = "/dmx_setup_files.js"; // ajout d'un "/" pour trouver le fichier avec ESP32
     // Serial.printf("\nRequête pour les scripts dans le fichier %s.", filename);
     server.send(200, "application/javascript", ReadFileToString(filename));
 }
 
 void load_dmx_setup_io()
 {
-    const char *filename = "dmx_setup_io.js";
+    const char *filename = "/dmx_setup_io.js"; // ajout d'un "/" pour trouver le fichier avec ESP32
     // Serial.printf("\nRequête pour les scripts dans le fichier %s.", filename);
     server.send(200, "application/javascript", ReadFileToString(filename));
 }
 
 void load_dmx_setup_lan()
 {
-    const char *filename = "dmx_setup_lan.js";
+    const char *filename = "/dmx_setup_lan.js"; // ajout d'un "/" pour trouver le fichier avec ESP32
     // Serial.printf("\nRequête pour les scripts dans le fichier %s.", filename);
     server.send(200, "application/javascript", ReadFileToString(filename));
 }
 
 void load_dmx_setup_uni()
 {
-    const char *filename = "dmx_setup_uni.js";
+    const char *filename = "/dmx_setup_uni.js"; // ajout d'un "/" pour trouver le fichier avec ESP32
     // Serial.printf("\nRequête pour les scripts dans le fichier %s.", filename);
     server.send(200, "application/javascript", ReadFileToString(filename));
 }
 
 void load_dmx_setup_val()
 {
-    const char *filename = "dmx_setup_val.js";
+    const char *filename = "/dmx_setup_val.js"; // ajout d'un "/" pour trouver le fichier avec ESP32
     // Serial.printf("\nRequête pour les scripts dans le fichier %s.", filename);
     server.send(200, "application/javascript", ReadFileToString(filename));
 }
 
 void load_siomin()
 {
-    const char *filename = "socket.io.min.js";
+    const char *filename = "/socket.io.min.js"; // ajout d'un "/" pour trouver le fichier avec ESP32
     // Serial.printf("\nRequête pour la feuille de style : %s.", filename);
     server.send(200, "application/javascript", ReadFileToString(filename));
 }
 
 void load_css()
 {
-    const char *filename = "style.css";
+    const char *filename = "/style.css"; // ajout d'un "/" pour trouver le fichier avec ESP32
     // Serial.printf("\nRequête pour la feuille de style : %s.", filename);
     server.send(200, "text/css", ReadFileToString(filename));
 }
 
 void load_wifi_reset()
 {
-    const char *filename = "wifi_reset.html";
+    const char *filename = "/wifi_reset.html"; // ajout d'un "/" pour trouver le fichier avec ESP32
     Serial.printf("\nRequête pour reinitialisé le WiFi.");
     server.send(200, "text/html", ReadFileToString(filename));
     wm.resetSettings();
